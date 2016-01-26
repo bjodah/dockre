@@ -33,18 +33,16 @@ Simplest way to install ``dockre`` is to use ``pip``:
 
 Examples
 --------
-See `examples/ <https://github.com/bjodah/dockre/tree/master/examples>`_
-
 Here is a simple example:
 
 .. code:: bash
 
    $ mkdir input
-   $ echo -e "report.txt:\n\techo 'hello world'>'$@'" > input/Makefile
+   $ echo -e "report.txt:\n\techo 'silly example'>\$@" > input/Makefile
    $ mkdir output
    $ dockre build
    $ cat output/report.txt
-   hello world
+   silly example
 
 
 License
