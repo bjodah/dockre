@@ -12,8 +12,13 @@ dockre
    :alt: License
 
 
+.. image:: logo.png
+   :target: https://raw.githubusercontent.com/bjodah/dockre/master/logo.svg
+   :align: center
+
+
 `dockre <https://github.com/bjodah/dockre>`_ provides a
-command line interface (through a `Python <http://www.python.org>`_ packge) for using **dock**er **re**producibly to build
+command line interface (through a `Python <http://www.python.org>`_ packge) for using docker reproducibly to build
 e.g. documents, binaries or host services. The default docker image used is the authors 
 personal one for work related tasks but it is changeable by specifying ``--image``.
 
