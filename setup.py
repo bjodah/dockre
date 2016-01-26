@@ -36,7 +36,7 @@ classifiers = [
 ]
 
 tests = [
-    #'dockre.tests',
+    'dockre.tests',
 ]
 
 descr = 'Commandline interface for using docker reproducibly'
