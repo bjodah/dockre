@@ -1,0 +1,17 @@
+build:
+  image: bjodah/bjodahimg:latest
+  commands:
+    - ./scripts/ci.sh dockre
+    - ./scripts/generate_docs.sh
+    - ./scripts/prepare_deploy.sh
+
+deploy:
+
+  rsync:
+    host: hera.physchem.kth.se
+    user: dockre
+    port: 22
+    source: deploy/public_html/
+    target: ~
+    recursive: true
+    delete: false
