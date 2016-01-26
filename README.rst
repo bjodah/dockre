@@ -1,5 +1,10 @@
 dockre
 ======
+.. image:: logo.png
+   :target: https://raw.githubusercontent.com/bjodah/dockre/master/logo.svg
+   :align: center
+
+Build status:
 
 .. image:: http://hera.physchem.kth.se:9090/api/badges/bjodah/dockre/status.svg
    :target: http://hera.physchem.kth.se:9090/bjodah/dockre
@@ -10,11 +15,6 @@ dockre
 .. image:: https://img.shields.io/pypi/l/dockre.svg
    :target: https://github.com/bjodah/dockre/blob/master/LICENSE
    :alt: License
-
-
-.. image:: logo.png
-   :target: https://raw.githubusercontent.com/bjodah/dockre/master/logo.svg
-   :align: center
 
 
 `dockre <https://github.com/bjodah/dockre>`_ provides a
