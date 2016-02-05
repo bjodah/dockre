@@ -12,6 +12,14 @@ import pkg_resources
 
 from . import __version__
 
+def conda_build(recipe, output, tag='latest', channels='', conda_py='',
+                conda_npy='', image='bjodah/bjodahimgdev'):
+    conda_build_script = pkg_resources.resource_filename(
+        __name__, 'scripts/conda-build.sh')
+    subprocess.check_output(
+        [conda_build_script, recipe, output, channels, conda_py, conda_npy,
+         image, tag], stderr=subprocess.STDOUT)
+
 
 def build(tag='latest', inp='input/', out='output/', cmd="make",
           image='bjodah/bjodahimg'):
