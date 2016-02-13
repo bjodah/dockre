@@ -9,6 +9,7 @@ from __future__ import (absolute_import, division, print_function)
 import argh
 import subprocess
 import pkg_resources
+import sys
 
 from . import __version__
 
@@ -41,13 +42,18 @@ def jupyter_notebook(mount='./', port=8888,
         [script, mount, str(port), cmd, image],
         stderr=subprocess.STDOUT).communicate()
 
+
+def version():
+    print(__version__)
+
+
 funcs = dict(filter(lambda (k, v): not k.startswith('__') and callable(v),
                     locals().items()))
 
 
 def main():
-    argh.dispatch_commands(list(funcs.values()))
+    sys.exit(argh.dispatch_commands(list(funcs.values())))
 
 
-if __name__ in ('__main__', 'dockre.__main__'):
+if __name__ in ('__main__', 'dockre.__main__'):  # direct & python -m
     main()
