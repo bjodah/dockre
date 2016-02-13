@@ -13,32 +13,32 @@ import pkg_resources
 from . import __version__
 
 
-def conda_build(recipe, output, tag='latest', channels='', conda_py='',
-                conda_npy='', image='bjodah/bjodahimgdev'):
+def conda_build(recipe, output, channels='', conda_py='',
+                conda_npy='', image='bjodah/bjodahimgdev:latest'):
     conda_build_script = pkg_resources.resource_filename(
         __name__, 'scripts/conda-build.sh')
     subprocess.Popen(
         [conda_build_script, recipe, output, channels, conda_py, conda_npy,
-         image, tag], stderr=subprocess.STDOUT).communicate()
+         image], stderr=subprocess.STDOUT).communicate()
 
 
-def build(tag='latest', inp='input/', out='output/', cmd="make",
-          image='bjodah/bjodahimg'):
+def build(inp='input/', out='output/', cmd="make",
+          image='bjodah/bjodahimg:latest'):
     """ Build out-of-tree with readonly input """
     build_script = pkg_resources.resource_filename(
         __name__, 'scripts/build.sh')
     subprocess.Popen(
-        [build_script, inp, out, cmd, image, tag],
+        [build_script, inp, out, cmd, image],
         stderr=subprocess.STDOUT).communicate()
 
 
-def jupyter_notebook(tag='latest', mount='./', port=8888,
-                     cmd="jupyter-notebook", image='bjodah/bjodahimg'):
+def jupyter_notebook(mount='./', port=8888,
+                     cmd="jupyter-notebook", image='bjodah/bjodahimg:latest'):
     """ Start a jupyter notebook server """
     script = pkg_resources.resource_filename(
         __name__, 'scripts/jupyter-notebook.sh')
     subprocess.Popen(
-        [script, mount, str(port), cmd, tag, image],
+        [script, mount, str(port), cmd, image],
         stderr=subprocess.STDOUT).communicate()
 
 funcs = dict(filter(lambda (k, v): not k.startswith('__') and callable(v),

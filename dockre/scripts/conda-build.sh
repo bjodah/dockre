@@ -39,7 +39,7 @@ if [ ! -z $5 ]; then
 fi
 # Since docker run as uid 0 by default we export our uid and gid and set ownership
 # of files in our volume /output before exiting the container.
-cat <<'EOF' | docker run --rm $CONDA_ENVS -e CONDA_CHANNELS=$3 -e HOST_UID=$(id -u) -e HOST_GID=$(id -g) -v $ABS_RECIPE_PATH:/recipe:ro -v $ABS_OUTPUT_PATH:/output -i $6:$7 bash -x
+cat <<'EOF' | docker run --rm $CONDA_ENVS -e CONDA_CHANNELS=$3 -e HOST_UID=$(id -u) -e HOST_GID=$(id -g) -v $ABS_RECIPE_PATH:/recipe:ro -v $ABS_OUTPUT_PATH:/output -i $6 bash -x
 IFS=',' read -a array <<< "$CONDA_CHANNELS"
 for element in "${array[@]}"
 do
