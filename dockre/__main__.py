@@ -47,7 +47,7 @@ def version():
     print(__version__)
 
 
-funcs = dict(filter(lambda (k, v): not k.startswith('__') and callable(v),
+funcs = dict(filter(lambda kv: not kv[0].startswith('__') and callable(kv[1]),
                     locals().items()))
 
 
@@ -55,5 +55,6 @@ def main():
     sys.exit(argh.dispatch_commands(list(funcs.values())))
 
 
-if __name__ in ('__main__', 'dockre.__main__'):  # direct & python -m
+# in ('__main__', 'dockre.__main__'):  # direct & python -m
+if __name__ == '__main__':
     main()

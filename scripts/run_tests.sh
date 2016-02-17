@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -ex
 # Usage
 #   $ ./scripts/run_tests.sh
 # or
