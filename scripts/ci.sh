@@ -4,12 +4,10 @@ if [[ "$CI_BRANCH" =~ ^v[0-9]+.[0-9]?* ]]; then
     echo ${CI_BRANCH} | tail -c +2 > __conda_version__.txt
 fi
 python2 setup.py sdist
-pip install dist/*.tar.gz
-(cd /; python2.7 -m pytest --pyargs $1)
-pip3 install dist/*.tar.gz
+python3 -m pip install --force-reinstall --upgrade dist/*.tar.gz
 (cd /; python3 -m pytest --pyargs $1)
-python2.7 setup.py build_ext -i
-python3 setup.py build_ext -i
+python2 -m pip install --force-reinstall --upgrade dist/*.tar.gz
+(cd /; python2 -m pytest --pyargs $1)
 PYTHONPATH=$(pwd) ./scripts/run_tests.sh --cov $1 --cov-report html
 ./scripts/coverage_badge.py htmlcov/ htmlcov/coverage.svg
 ! grep "DO-NOT-MERGE!" -R . --exclude ci.sh
