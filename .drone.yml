@@ -11,7 +11,7 @@ deploy:
     host: hera.physchem.kth.se
     user: dockre
     port: 22
-    source: deploy/public_html/
-    target: ~
+    source: deploy/public_html
+    target: ~/public_html
     recursive: true
     delete: false
