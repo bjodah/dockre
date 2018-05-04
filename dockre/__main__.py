@@ -44,19 +44,19 @@ def conda_build(recipe, output, channels='', conda_py='',
 
 
 def build(inp='input/', out='output/', cmd="make",
-          image='bjodah/bjodahimg:latest', mounts='', envs=''):
+          image='bjodah/bjodahimg18:latest', mounts='', envs=''):
     """ Build out-of-tree with readonly input """
     build_script = pkg_resources.resource_filename(
         __name__, 'scripts/build.sh')
-    subprocess.Popen(
+    p = subprocess.Popen(
         [build_script, inp, out, cmd, _get_image(image)] +
         ['-v %s' % s for s in mounts.split(';') if s != ''] +
         ['-e %s' % s for s in envs.split(';') if s != ''],
-        stderr=subprocess.STDOUT).communicate()
+        stderr=subprocess.STDOUT, stdin=subprocess.PIPE)
+    p.communicate()
 
 
-def jupyter_notebook(mount='./', port=8888,
-                     cmd="jupyter-notebook", image='bjodah/bjodahimg:latest'):
+def jupyter_notebook(mount='./', port=8888, cmd="jupyter-notebook", image='bjodah/bjodahimg18:latest'):
     """ Start a jupyter notebook server """
     script = pkg_resources.resource_filename(
         __name__, 'scripts/jupyter-notebook.sh')
