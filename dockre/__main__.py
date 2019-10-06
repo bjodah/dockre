@@ -44,12 +44,12 @@ def conda_build(recipe, output, channels='', conda_py='',
 
 
 def build(inp='input/', out='output/', cmd="make",
-          image='bjodah/bjodahimg:latest', mounts='', envs=''):
+          image='bjodah/bjodahimg:latest', mounts='', envs='', sudo=False):
     """ Build out-of-tree with readonly input """
     build_script = pkg_resources.resource_filename(
         __name__, 'scripts/build.sh')
     subprocess.Popen(
-        [build_script, inp, out, cmd, _get_image(image)] +
+        [build_script, inp, out, 'sudo docker' if sudo else 'docker', cmd, _get_image(image)] +
         ['-v %s' % s for s in mounts.split(';') if s != ''] +
         ['-e %s' % s for s in envs.split(';') if s != ''],
         stderr=subprocess.STDOUT).communicate()
