@@ -12,15 +12,16 @@ if [[ $IN_DOCKER == "1" ]]; then
     mkdir -m 0755 -p /home/$HOST_LOGNAME/.config
     chown -R $HOST_UID:$HOST_GID /home/$HOST_LOGNAME
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-    IN_DOCKER=2 su $HOST_LOGNAME -c "bash -c \"source $BASH_SOURCE\""
+    IN_DOCKER=2 su $HOST_LOGNAME -c "bash --rcfile \"$BASH_SOURCE\""
+    exit $?
 elif [[ $IN_DOCKER == "2" ]]; then
+    source /etc/bash.bashrc
+    #source $HOME/.bashrc
     echo "whoami: $(whoami), id -u: $(id -u), id -g: $(id -g), HOME: $HOME, USER: $USER, LOGNAME: $LOGNAME"
-    set -ex
-    ${RUNSCRIPT}
 else
     set -ux
     MOUNT=$1
-    IMAGE=$2
+    DOCKERIMAGE=$2
     if groups | grep docker >/dev/null; then
         DOCKERCMD=docker
     else
@@ -38,8 +39,8 @@ else
                -e HOST_LOGNAME=${HOST_LOGNAME} \
                -e HOST_UID=$(id -u ${HOST_LOGNAME}) \
                -e HOST_GID=$(id -g ${HOST_LOGNAME}) \
-               "$@" \
-               -v "$MOUNT":/work -w /work \
+               "${@:3}" \
+               -v "$(realpath $MOUNT)":/work -w /work \
                -v "$DOCKRE_SCRIPTS_DIR":/dockre-scripts \
                -it $DOCKERIMAGE \
                bash --rcfile /dockre-scripts/$(basename $0)

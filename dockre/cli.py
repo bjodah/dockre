@@ -4,7 +4,6 @@ Command line tool for launching docker containers based on bjodah/bjodahimg
 from __future__ import (absolute_import, division, print_function)
 
 
-from pathlib import Path
 import subprocess
 import sys
 
@@ -68,7 +67,7 @@ def jupyter_notebook(mount='./', port=8888, cmd="jupyter-notebook", image='bjoda
 def work(mount='./', image="bjodah/bjodahimg20dev:v1.1.0"):
     work_script = pkg_resources.resource_filename(
         __name__, "scripts/work.sh")
-    p = subprocess.Popen([work_script, Path(mount).resolve(), _get_image(image)])
+    p = subprocess.Popen([work_script, mount, _get_image(image)])
     p.communicate()
 
 def version():
