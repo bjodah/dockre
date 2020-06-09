@@ -12,6 +12,7 @@ if [[ $IN_DOCKER == "1" ]]; then
     mkdir -m 0755 -p /home/$HOST_LOGNAME/.config
     chown -R $HOST_UID:$HOST_GID /home/$HOST_LOGNAME
     echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+    #stty cols $COLUMNS rows $LINES
     IN_DOCKER=2 su $HOST_LOGNAME -c "bash --rcfile \"$BASH_SOURCE\""
     exit $?
 elif [[ $IN_DOCKER == "2" ]]; then
@@ -32,16 +33,20 @@ else
     
     # --cap-add SYS_ADMIN --device /dev/fuse \
     # --security-opt apparmor:unconfined \
-
+    WORKDIR="$(realpath $MOUNT)"
     $DOCKERCMD run --rm --cap-add SYS_PTRACE --security-opt seccomp=unconfined \
+               --detach-keys=ctrl-@ \
                -e TERM \
                -e IN_DOCKER=1 \
                -e HOST_LOGNAME=${HOST_LOGNAME} \
                -e HOST_UID=$(id -u ${HOST_LOGNAME}) \
                -e HOST_GID=$(id -g ${HOST_LOGNAME}) \
+               -e WORKDIR="$(realpath $MOUNT)" \
+               -v "$WORKDIR":"$WORKDIR" -w "$WORKDIR" \
                "${@:3}" \
-               -v "$(realpath $MOUNT)":/work -w /work \
                -v "$DOCKRE_SCRIPTS_DIR":/dockre-scripts \
                -it $DOCKERIMAGE \
                bash --rcfile /dockre-scripts/$(basename $0)
+               # -e COLUMNS="$(tput cols)" \
+               # -e LINES="$(tput lines)" \
 fi
