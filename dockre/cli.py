@@ -64,10 +64,10 @@ def jupyter_notebook(mount='./', port=8888, cmd="jupyter-notebook", image='bjoda
         stderr=subprocess.STDOUT)
     out, err = p.communicate()
 
-def work(mount='./', image="bjodah/bjodahimg20dev:v1.1.0"):
+def work(mount='./', image="bjodah/bjodahimg20dot", command="bash"):
     work_script = pkg_resources.resource_filename(
         __name__, "scripts/work.sh")
-    p = subprocess.Popen([work_script, mount, _get_image(image)])
+    p = subprocess.Popen([work_script, mount, _get_image(image), command])
     out, err = p.communicate()
 
 def version():
