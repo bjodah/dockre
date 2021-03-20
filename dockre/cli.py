@@ -55,12 +55,13 @@ def build(inp='input/', out='output/', cmd="make",
     p.communicate()
 
 
-def jupyter_notebook(mount='./', port=8888, cmd="jupyter-notebook", image='bjodah/bjodahimg20:v1.1'):
+def jupyter_notebook(mount='./', port=8888, cmd="jupyter-notebook", image='bjodah/bjodahimg20:v1.1', envs=''):
     """ Start a jupyter notebook server """
     script = pkg_resources.resource_filename(
         __name__, 'scripts/jupyter-notebook.sh')
     p = subprocess.Popen(
-        [script, mount, str(port), cmd, _get_image(image)],
+        [script, mount, str(port), cmd, _get_image(image)] +
+        ['-e %s' % s for s in envs.split(';') if s != ''],
         stderr=subprocess.STDOUT)
     out, err = p.communicate()
 
